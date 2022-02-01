@@ -23,11 +23,11 @@ VALUES
 INSERT INTO employees (employee_id, first_name, last_name, role_id)
 VALUES
     (1, 'Michael', 'Klein', 1),
-    (1, 'Zachary', 'Arsement', 6),
-    (1, 'Martha', 'Dempsey', 9),
-    (1, 'Francis', 'Bond', 6),
-    (1, 'Leland', 'Byrd', 6),
-    (1, 'Ellie', 'Delgato', 2),
-    (1, 'George', 'Geils', 3),
-    (1, 'Morgan', 'Henning', 8);
+    (2, 'Zachary', 'Arsement', 6),
+    (3, 'Martha', 'Dempsey', 9),
+    (4, 'Francis', 'Bond', 6),
+    (5, 'Leland', 'Byrd', 6),
+    (6, 'Ellie', 'Delgato', 2),
+    (7, 'George', 'Geils', 3),
+    (8, 'Morgan', 'Henning', 8);
 
