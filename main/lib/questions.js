@@ -1,10 +1,8 @@
-import inquirer from "inquirer"
-
 const questions = [
     {
         type: 'list',
         message: 'What would you like to do?',
-        choices: ['View All Departments','View All Roles','View All employees','Add A Department','Add A Role','Add An Employee', 'Update An Employee Role'],
+        choices: ['View All Departments','View All Roles','View All Employees','Add A Department','Add A Role','Add An Employee', 'Update An Employee Role'],
         name: 'userChoice',
     },
     {
@@ -74,4 +72,4 @@ const questions = [
     },
 ]
 
-export default questions
+module.exports = questions
