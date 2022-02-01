@@ -23,17 +23,17 @@ JOIN roles ON departments.department_id = roles.department_id
 JOIN employees ON roles.role_id = employees.role_id;
 
 -- Add A Department
-INSERT INTO departments (department_id, department_name)
+INSERT INTO departments (department_name)
+    VALUES 
+        (?);
+
+-- Add A Role
+INSERT INTO roles (role_title, salary, department_name)
     VALUES 
         (?,?);
 
--- Add A Role
-INSERT INTO roles (role_id, role_title, salary, department_name)
-    VALUES 
-        (?,?,?);
-
 -- Add A Employee
-INSERT INTO roles (employee_id, first_name, last_name, role_title, manager_id)
+INSERT INTO roles (first_name, last_name, role_title, manager_id)
     VALUES 
         (?,?,?,?);
 
