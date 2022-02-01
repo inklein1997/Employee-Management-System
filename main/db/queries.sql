@@ -7,9 +7,9 @@ FROM departments;
 -- FROM table1
 -- JOIN table2 ON table1.primarykey = table2.foreignkey
 
-SELECT *
-FROM departments
-JOIN roles ON departments.department_id = roles.department_id;
+SELECT role_id AS id, role_title, department_name, salary 
+FROM departments 
+JOIN roles ON roles.department_id = departments.department_id;
 
 -- VIEW ALL EMPLOYEES
 -- SELECT *

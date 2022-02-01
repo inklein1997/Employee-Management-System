@@ -1,33 +1,33 @@
 USE company_db
 
-INSERT INTO departments (department_id, department_name)
+INSERT INTO departments (department_name)
 VALUES 
-    (1, 'Operations'),
-    (2, 'Human Resources'),
-    (3, 'Quality Assurance'),
-    (4, 'Engineering'),
-    (5, 'Facilities');
+    ('Operations'),
+    ('Human Resources'),
+    ('Quality Assurance'),
+    ('Engineering'),
+    ('Facilities');
 
-INSERT INTO roles (role_id, role_title, salary, department_id)
+INSERT INTO roles (role_title, salary, department_id)
 VALUES
-    (1, 'Lab Technician', 40000, 1),
-    (2, 'Lab Supervisor', 75000, 1),
-    (3, 'HR Representative', 55000, 2),
-    (4, 'Reagents Tester', 40000, 3),
-    (5, 'Equipment Analyst', 45000, 3),
-    (6, 'Junior-level Software Engineer', 65000, 4),
-    (7, 'Mid-level Software Engineer', 85000, 4),
-    (8, 'Senior-level Software Engineer', 110000, 4),
-    (9, 'Janitor', 34000, 5);
+    ('Lab Technician', 40000, 1),
+    ('Lab Supervisor', 75000, 1),
+    ('HR Representative', 55000, 2),
+    ('Reagents Tester', 40000, 3),
+    ('Equipment Analyst', 45000, 3),
+    ('Junior-level Software Engineer', 65000, 4),
+    ('Mid-level Software Engineer', 85000, 4),
+    ('Senior-level Software Engineer', 110000, 4),
+    ('Janitor', 34000, 5);
 
-INSERT INTO employees (employee_id, first_name, last_name, role_id)
+INSERT INTO employees (first_name, last_name, role_id, manager_id)
 VALUES
-    (1, 'Michael', 'Klein', 1),
-    (2, 'Zachary', 'Arsement', 6),
-    (3, 'Martha', 'Dempsey', 9),
-    (4, 'Francis', 'Bond', 6),
-    (5, 'Leland', 'Byrd', 6),
-    (6, 'Ellie', 'Delgato', 2),
-    (7, 'George', 'Geils', 3),
-    (8, 'Morgan', 'Henning', 8);
+    ('Zachary', 'Arsement', 6, null),
+    ('Martha', 'Dempsey', 9, null),
+    ('Leland', 'Byrd', 6, null),
+    ('Morgan', 'Henning', 8, null),
+    ('Michael', 'Klein', 1, 1),
+    ('Francis', 'Bond', 6, 3),
+    ('Ellie', 'Delgato', 2, 4),
+    ('George', 'Geils', 3, 4);
 
