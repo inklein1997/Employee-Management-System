@@ -1,37 +1,42 @@
-const db = require('../config/connection')
+// const db = require('../config/connection')
+// const questions = require('../lib/questions')
 
-// const retrieveDepartments = () => {
-//     let departmentList
-//     db.query(`SELECT department_name FROM departments;`, (err, response) => {
-//         if (err) {
-//             console.log(err);
+// const retrieveDepartments = () => { 
+//     const bigarray = db.query(`SELECT department_name FROM departments;`, function (err, response) {
+//         if (response === undefined) {
+//             console.log(err)
+//             console.log('Data is undefined');
 //         } else {
-//             const departments = response.map(department => department.department_name);
-//             departmentList = departments
-//             // return departments;
+//             console.log(response)
+//             // return (response.map(department => department.department_name));
+//             return 'test'
 //         }
-//     })
-//     return departmentList
-// }
-
-// console.log(retrieveDepartments());
-
-
-
-const retrieveDepartments = () => {
-    return new Promise((resolve, reject) => {
-        db.query(`SELECT department_name FROM departments;`, (err, response) => {
-            if (err) {
-                reject(err);
-            } else {
-                resolve(response.map(department => department.department_name))
-            }
-        })
-    })
+//     })    
+//     console.log(bigarray)
 }
 
-const departmentList = retrieveDepartments().then(data => console.log(data)).catch('there is an error')
 
-module.exports = departmentList
+// retrieveDepartments()
 
-// console.log(retrieveDepartments().then(data => {return data}))
+// const retrieveDepartments = new Promise(function (resolve, reject) {
+//     db.query(`SELECT department_name FROM departments;`, function (err, response) {
+//         if (response === undefined) {
+//             reject(new Error('Data is undefined'));
+//         } else {
+//             return Promise.resolve(response.map(department => department.department_name));
+//         }
+//     })
+// })
+
+
+
+// let data
+
+// retrieveDepartments
+//     .then((values) => {
+//         return values
+//     })
+//     .catch(Error)
+
+//     console.log(retrieveDepartments)
+// module.exports = data

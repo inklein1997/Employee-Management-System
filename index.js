@@ -37,7 +37,7 @@ const displayEmployees = () => {
     FROM departments
     JOIN roles ON departments.department_id = roles.department_id
     JOIN employees ON roles.role_id = employees.role_id;`
-    db.query(sqlQuery, (err, response) => {
+    const display = db.query(sqlQuery, (err, response) => {
         if (err) {
             console.log(err);
             return
@@ -46,6 +46,8 @@ const displayEmployees = () => {
             askQuestions()
         }
     })
+    console.log('===============================')
+    console.log(display)
 };
 
 const addDepartment = (departmentName) => {
