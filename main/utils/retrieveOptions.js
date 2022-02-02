@@ -5,13 +5,29 @@ const retrieveDepartments = () => {
         if (err) {
             console.log(err);
         } else {
-            console.log('============')
-            console.log('Below is the console log within the function')
-            console.log(response.map(department => department.department_name));
-            return response.map(department => department.department_name)
+            const departments = await response.map(department => department.department_name);
+            return departments;
         }
     })
 }
-console.log('============')
-console.log('below is the console log outside of the function')
-console.log(retrieveDepartments())
+
+console.log(retrieveDepartments());
+
+
+
+// const retrieveDepartments = () => {
+//     return new Promise((resolve, reject) => {
+//         db.query(`SELECT department_name FROM departments;`, (err, response) => {
+//             if (err) {
+//                 reject(err);
+//             } else {
+//                 resolve(response.map(department => department.department_name))
+//             }
+//         })
+//     })
+// }
+
+// const departments = retrieveDepartments().then(data => {return data}).catch('there is an error')
+// console.log(departments)
+
+// console.log(retrieveDepartments().then(data => {return data}))
