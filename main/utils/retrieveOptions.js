@@ -1,33 +1,37 @@
 const db = require('../config/connection')
 
+// const retrieveDepartments = () => {
+//     let departmentList
+//     db.query(`SELECT department_name FROM departments;`, (err, response) => {
+//         if (err) {
+//             console.log(err);
+//         } else {
+//             const departments = response.map(department => department.department_name);
+//             departmentList = departments
+//             // return departments;
+//         }
+//     })
+//     return departmentList
+// }
+
+// console.log(retrieveDepartments());
+
+
+
 const retrieveDepartments = () => {
-    db.query(`SELECT department_name FROM departments;`, (err, response) => {
-        if (err) {
-            console.log(err);
-        } else {
-            const departments = response.map(department => department.department_name);
-            return departments;
-        }
+    return new Promise((resolve, reject) => {
+        db.query(`SELECT department_name FROM departments;`, (err, response) => {
+            if (err) {
+                reject(err);
+            } else {
+                resolve(response.map(department => department.department_name))
+            }
+        })
     })
 }
 
-console.log(retrieveDepartments());
+const departmentList = retrieveDepartments().then(data => console.log(data)).catch('there is an error')
 
-
-
-// const retrieveDepartments = () => {
-//     return new Promise((resolve, reject) => {
-//         db.query(`SELECT department_name FROM departments;`, (err, response) => {
-//             if (err) {
-//                 reject(err);
-//             } else {
-//                 resolve(response.map(department => department.department_name))
-//             }
-//         })
-//     })
-// }
-
-// const departments = retrieveDepartments().then(data => {return data}).catch('there is an error')
-// console.log(departments)
+module.exports = departmentList
 
 // console.log(retrieveDepartments().then(data => {return data}))

@@ -1,3 +1,5 @@
+const data = require('../utils/retrieveOptions')
+
 const questions = [
     {
         type: 'list',
