@@ -5,7 +5,7 @@ const retrieveDepartments = () => {
         if (err) {
             console.log(err);
         } else {
-            const departments = await response.map(department => department.department_name);
+            const departments = response.map(department => department.department_name);
             return departments;
         }
     })
