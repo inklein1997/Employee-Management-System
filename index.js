@@ -53,7 +53,6 @@ const addDepartment = (departmentName) => {
         type: 'input',
         message: 'What is the name of the department?',
         name: 'departmentName',
-        // when: (answers => answers.userChoice == 'Add A Department'),
     }).then(answers => {
         const sqlQuery = `INSERT INTO departments (department_name) VALUES (?);`
         db.query(sqlQuery, [answers.departmentName], (err, response) => {
@@ -61,8 +60,8 @@ const addDepartment = (departmentName) => {
                 console.log(err);
                 return
             } else {
-                response.map(department => console.log(department))
-                console.log(`Added ${departmentName} to the database`)
+                // response.map(department => console.log(department))
+                console.log(`Added ${answers.departmentName} to the database`)
                 askQuestions()
             }
         })
@@ -177,7 +176,6 @@ const updateEmployee = () => {
     LEFT JOIN employees ON roles.role_id = employees.role_id;`
 
     db.query(sqlQuery1, (err, response) => {
-        console.log(response)
         let roles = [...new Set(response.map(employee => employee.role_title))]
         let employees = response.map(employee => ({ employeeId: employee.id, firstName: employee.first_name, lastName: employee.last_name, managerId: employee.manager_id })).filter(employee => employee.firstName != null)
         let employeesList = employees.map(employee => `${employee.firstName} ${employee.lastName}`)
