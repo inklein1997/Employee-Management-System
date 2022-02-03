@@ -117,30 +117,13 @@ const addEmployee = () => {
     FROM departments
     JOIN roles ON departments.department_id = roles.department_id
     LEFT JOIN employees ON roles.role_id = employees.role_id;`
+
     db.query(sqlQuery1, (err, response) => {
         let roles = [...new Set(response.map(employee => employee.role_title))]
 
-        console.log('==================')
-        console.log(roles)
-        console.log('==================')
-
         let managers = response.map(employee => ({ employeeId: employee.id, firstName: employee.first_name, lastName: employee.last_name, managerId: employee.manager_id })).filter(employee => typeof employee.employeeId == 'number' && typeof employee.managerId != 'number')
 
-        console.log('==================')
-        console.log(managers.indexOf())
-        console.log('==================')
-
         let employeeArray = managers.map(employee => `${employee.firstName} ${employee.lastName}`)
-
-        console.log('==================')
-        console.log(employeeArray)
-        console.log('==================')
-
-        console.log('==================')
-        
-        console.log('==================')
-
-
         inquirer.prompt([
             {
                 type: 'input',
@@ -172,7 +155,8 @@ const addEmployee = () => {
             const sqlQuery2 = `INSERT INTO employees (first_name, last_name, role_id, manager_id) VALUES (?,?,?,?);`
             const { firstName, lastName, employeeRole, employeeManager } = answers
             const roleId = roles.indexOf(employeeRole)
-            const managerID = managers[managers.findIndex(manager => `${manager.firstName} ${manager.lastName}`== employeeManager)].employeeId
+            const managerID = managers[managers.findIndex(manager => `${manager.firstName} ${manager.lastName}` == employeeManager)].employeeId
+
             db.query(sqlQuery2, [firstName, lastName, roleId, managerID], (err, response) => {
                 if (err) {
                     console.log(err);
@@ -186,18 +170,46 @@ const addEmployee = () => {
     })
 }
 
-// const updateEmployee = (roleId, employeeId) => {
-//     const sqlQuery = `UPDATE employees SET role_id = ? WHERE employee_id = ?`
-//     db.query(sqlQuery, [roleId, employeeId], (err, response) => {
-//         if (err) {
-//             console.log(err);
-//             return
-//         } else {
-//             console.log(`Added employee ${firstName} ${lastName} to the database`)
-//             askQuestions()
-//         }
-//     })
-// };
+const updateEmployee = () => {
+    const sqlQuery1 = `SELECT employee_id AS id, first_name, last_name, roles.role_id, role_title, department_name, salary, manager_id
+    FROM departments
+    JOIN roles ON departments.department_id = roles.department_id
+    LEFT JOIN employees ON roles.role_id = employees.role_id;`
+
+    db.query(sqlQuery1, (err, response) => {
+        console.log(response)
+        let roles = [...new Set(response.map(employee => employee.role_title))]
+        let employees = response.map(employee => ({ employeeId: employee.id, firstName: employee.first_name, lastName: employee.last_name, managerId: employee.manager_id })).filter(employee => employee.firstName != null)
+        let employeesList = employees.map(employee => `${employee.firstName} ${employee.lastName}`)
+        inquirer.prompt([
+            {
+                type: 'list',
+                message: "Who's information would you like to update?",
+                name: 'employeeSelection',
+                choices: employeesList,
+            },
+            {
+                type: 'list',
+                message: "Which role do you ant to assign the selected employee?",
+                name: 'employeeSelectionRole',
+                choices: roles,
+            },
+        ]).then(answers => {
+            let employeeId = employees[employees.findIndex(employee => `${employee.firstName} ${employee.lastName}`  == answers.employeeSelection)].employeeId
+            let roleId = response[response.findIndex(employee => answers.employeeSelectionRole == employee.role_title)].role_id
+            const sqlQuery = `UPDATE employees SET role_id = ? WHERE employee_id = ?`
+            db.query(sqlQuery, [roleId, employeeId], (err, response) => {
+                if (err) {
+                    console.log(err);
+                    return
+                } else {
+                    console.log(`Added employee ${answers.employeeSelection} to the database`)
+                    askQuestions()
+                }
+            })
+        })
+    })
+}
 
 const askQuestions = () => {
     inquirer.prompt({
@@ -206,9 +218,8 @@ const askQuestions = () => {
         choices: ['View All Departments', 'View All Roles', 'View All Employees', 'Add A Department', 'Add A Role', 'Add An Employee', 'Update An Employee Role'],
         name: 'userChoice',
     }).then((answer) => {
-        const { userChoice, departmentName, roleName, salary, roleDepartment, firstName, lastName, employeeRole, employeeManager, employeeSelection, employeeSelectionRole } = answer
-        console.log(`\nUser selected to ${userChoice}\n`)
-        switch (userChoice) {
+        console.log(`\nUser selected to ${answer.userChoice}\n`)
+        switch (answer.userChoice) {
             case 'View All Departments':
                 displayDepartments();
                 break;
@@ -227,14 +238,12 @@ const askQuestions = () => {
             case 'Add An Employee':
                 addEmployee();
                 break;
-            // case 'Update An Employee':
-            //     updateEmployee();
-            //     break;
+            case 'Update An Employee Role':
+                updateEmployee();
+                break;
         }
     })
     return
 }
 
 askQuestions()
-
-
