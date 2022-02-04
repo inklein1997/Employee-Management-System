@@ -1,7 +1,6 @@
-const inquirer = require('inquirer');
 const db = require('../config/connection')
 
-const retrieveDepartments = async (data) => {
+const retrieveDepartments = async () => {
     let depts = await db.promise().query(`SELECT * FROM departments`);
     let deptsArr = depts[0].map(({ department_id, department_name }) => ({
         name: `${department_name}`,
@@ -36,6 +35,5 @@ const retrieveManagers = async () => {
     }));
     return managersArr
 }
-
 
 module.exports = { retrieveDepartments, retrieveRoles, retrieveEmployees, retrieveManagers };
