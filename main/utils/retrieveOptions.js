@@ -21,7 +21,6 @@ const retrieveRoles = async () => {
 
 const retrieveEmployees = async () => {
     let employees = await db.promise().query(`SELECT * FROM employees`);
-    // console.log(employees[0])
     let employeesArr = employees[0].map(({ employee_id, first_name, last_name }) => ({
         name: `${first_name} ${last_name}`,
         value: employee_id

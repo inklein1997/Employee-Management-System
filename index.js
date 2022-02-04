@@ -4,14 +4,14 @@ const cTable = require('console.table');
 const db = require('./main/config/connection');
 
 const displayDepartments = () => {
-    const sqlQuery = `SELECT * FROM departments;`
+    const sqlQuery = `SELECT * FROM departments;`;
     db.query(sqlQuery, (err, response) => {
         if (err) {
             console.log(err);
-            return
+            return;
         } else {
-            console.table(response)
-            askQuestions()
+            console.table(response);
+            askQuestions();
         }
     })
 };
@@ -19,19 +19,18 @@ const displayDepartments = () => {
 const displayRoles = () => {
     const sqlQuery = `SELECT role_id AS id, role_title, department_name, salary 
         FROM departments 
-        JOIN roles ON roles.department_id = departments.department_id;`
+        JOIN roles ON roles.department_id = departments.department_id;`;
     db.query(sqlQuery, (err, response) => {
         if (err) {
             console.log(err);
-            return
+            return;
         } else {
-            console.table(response)
-            askQuestions()
+            console.table(response);
+            askQuestions();
         }
     })
 };
 
-// NEED TO FIX MANAGERS COLUMN!
 const displayEmployees = () => {
     const sqlQuery = `SELECT emp.employee_id AS id, emp.first_name, emp.last_name, role_title, department_name, emp.manager_id, man.first_name AS manager_first_name, man.
         last_name AS manager_last_name
@@ -39,14 +38,14 @@ const displayEmployees = () => {
         JOIN roles ON emp.role_id = roles.role_id
         LEFT JOIN departments ON roles.department_id= departments.department_id
         LEFT JOIN employees man
-        ON man.employee_id = emp.manager_id;`
+        ON man.employee_id = emp.manager_id;`;
     db.query(sqlQuery, (err, response) => {
         if (err) {
             console.log(err);
-            return
+            return;
         } else {
-            console.table(response)
-            askQuestions()
+            console.table(response);
+            askQuestions();
         }
     })
 };
@@ -56,49 +55,49 @@ const addDepartment = (departmentName) => {
     db.query(sqlQuery, [departmentName], (err, response) => {
         if (err) {
             console.log(err);
-            return
+            return;
         } else {
-            console.log(`Added ${departmentName} to the database`)
-            askQuestions()
+            console.log(`Added ${departmentName} to the database`);
+            askQuestions();
         }
     })
 };
 
 const addRole = (roleTitle, salary, departmentName) => {
-    const sqlQuery = `INSERT INTO roles (role_title, salary, department_id) VALUES (?,?,?);`
+    const sqlQuery = `INSERT INTO roles (role_title, salary, department_id) VALUES (?,?,?);`;
     db.query(sqlQuery, [roleTitle, salary, departmentName], (err, response) => {
         if (err) {
             console.log(err);
-            return
+            return;
         } else {
-            console.log(`Added ${roleTitle} to the database`)
-            askQuestions()
+            console.log(`Added ${roleTitle} to the database`);
+            askQuestions();
         }
     })
 };
 
 const addEmployee = (firstName, lastName, roleName, employeeManager) => {
-    const sqlQuery = `INSERT INTO employees (first_name, last_name, role_id, manager_id) VALUES (?,?,?,?);`
+    const sqlQuery = `INSERT INTO employees (first_name, last_name, role_id, manager_id) VALUES (?,?,?,?);`;
     db.query(sqlQuery, [firstName, lastName, roleName, employeeManager], (err, response) => {
         if (err) {
             console.log(err);
-            return
+            return;
         } else {
-            console.log(`Added employee ${firstName} ${lastName} to the database`)
-            askQuestions()
+            console.log(`Added employee ${firstName} ${lastName} to the database`);
+            askQuestions();
         }
     })
 };
 
 const updateEmployee = (roleId, employeeId) => {
-    const sqlQuery = `UPDATE employees SET role_id = ? WHERE employee_id = ?`
+    const sqlQuery = `UPDATE employees SET role_id = ? WHERE employee_id = ?`;
     db.query(sqlQuery, [roleId, employeeId], (err, response) => {
         if (err) {
             console.log(err);
-            return
+            return;
         } else {
-            console.log("The Employee's role has been changed")
-            askQuestions()
+            console.log("The Employee's role has been changed");
+            askQuestions();
         }
     })
 };
@@ -108,14 +107,14 @@ const viewEmployeesByDepartment = (departmentId) => {
         FROM company_db.employees
         JOIN company_db.roles ON employees.role_id = roles.role_id
         JOIN company_db.departments ON roles.department_id = departments.department_id
-        WHERE departments.department_id = ?;`
+        WHERE departments.department_id = ?;`;
     db.query(sqlQuery, [departmentId], (err, response) => {
         if (err) {
-            console.log(err)
-            return
+            console.log(err);
+            return;
         } else {
-            console.table(response)
-            askQuestions()
+            console.table(response);
+            askQuestions();
         }
     })
 }
@@ -138,34 +137,34 @@ const viewEmployeesByManager = (managerId) => {
 }
 
 const updateEmployeeManager = (employeeId, managerId) => {
-    const sqlQuery = `UPDATE employees SET manager_id = ? WHERE employee_id = ?`
+    const sqlQuery = `UPDATE employees SET manager_id = ? WHERE employee_id = ?`;
     db.query(sqlQuery, [managerId, employeeId], (err, response) => {
-        err ? console.log(err) : console.log(`Employee's manager has been updated`)
-        askQuestions()
+        err ? console.log(err) : console.log(`Employee's manager has been updated`);
+        askQuestions();
     })
 }
 
 const deleteDepartment = (departmentId) => {
-    const sqlQuery = `DELETE FROM departments WHERE department_id = ?;`
+    const sqlQuery = `DELETE FROM departments WHERE department_id = ?;`;
     db.query(sqlQuery, [departmentId], (err, res) => {
-        err ? console.log(err) : console.log(`Department has been deleted`)
-        askQuestions()
+        err ? console.log(err) : console.log(`Department has been deleted`);
+        askQuestions();
     })
 }
 
 const deleteRole = (roleId) => {
-    const sqlQuery = `DELETE FROM roles WHERE role_id = ?;`
+    const sqlQuery = `DELETE FROM roles WHERE role_id = ?;`;
     db.query(sqlQuery, [roleId], (err, res) => {
-        err ? console.log(err) : console.log(`Role has been deleted`)
-        askQuestions()
+        err ? console.log(err) : console.log(`Role has been deleted`);
+        askQuestions();
     })
 }
 
 const deleteEmployee = (employeeId) => {
-    const sqlQuery = `DELETE FROM employees WHERE employee_id = ?;`
+    const sqlQuery = `DELETE FROM employees WHERE employee_id = ?;`;
     db.query(sqlQuery, [employeeId], (err, res) => {
-        err ? console.log(err) : console.log(`Employee has been deleted`)
-        askQuestions()
+        err ? console.log(err) : console.log(`Employee has been deleted`);
+        askQuestions();
     })
 }
 
@@ -177,15 +176,15 @@ const displayBudget = () => {
     GROUP BY departments.department_name;`;
     db.query(sqlQuery, (err, response) => {
         err ? console.log(err) : console.table(response)
-        askQuestions()
+        askQuestions();
     })
 }
 
 const askQuestions = () => {
     inquirer.prompt(questions)
         .then((answers) => {
-            const { userChoice, departmentName, roleName, salary, roleDepartment, firstName, lastName, employeeRole, employeeManager, employeeSelection, employeeSelectionRole } = answers
-            console.log(`\nYou selected ${userChoice}\n`)
+            const { userChoice, departmentName, roleName, salary, roleDepartment, firstName, lastName, employeeRole, employeeManager, employeeSelection, employeeSelectionRole } = answers;
+            console.log(`\nYou selected ${userChoice}\n`);
             switch (userChoice) {
                 case 'View All Departments':
                     displayDepartments();
@@ -230,10 +229,11 @@ const askQuestions = () => {
                     displayBudget();
                     break;
                 case 'Quit':
-                    console.log('Goodbye!')
+                    console.log('Goodbye!');
+                    db.end();
                     break;
             }
         })
 }
 
-askQuestions()
+askQuestions();
