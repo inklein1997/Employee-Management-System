@@ -137,6 +137,14 @@ const viewEmployeesByManager = (managerId) => {
     })
 }
 
+const updateEmployeeManager = (employeeId, managerId) => {
+    const sqlQuery = `UPDATE employees SET manager_id = ? WHERE employee_id = ?`
+    db.query(sqlQuery, [managerId, employeeId], (err, response) => {
+        err ? console.log(err) : console.log(`Employee's manager has been updated`)
+        askQuestions()
+    })
+}
+
 const askQuestions = () => {
     inquirer.prompt(questions)
         .then((answers) => {
@@ -171,6 +179,8 @@ const askQuestions = () => {
                 case 'View Employees By Manager':
                     viewEmployeesByManager(employeeManager);
                     break;
+                case 'Update Employee Managers':
+                    updateEmployeeManager(employeeSelection, employeeManager)
             }
         })
     return

@@ -4,7 +4,7 @@ const questions = [
     {
         type: 'list',
         message: 'What would you like to do?',
-        choices: ['View All Departments', 'View All Roles', 'View All Employees', 'Add A Department', 'Add A Role', 'Add An Employee', 'Update An Employee Role', 'View Employees By Department', 'View Employees By Manager'],
+        choices: ['View All Departments', 'View All Roles', 'View All Employees', 'Add A Department', 'Add A Role', 'Add An Employee', 'Update An Employee Role', 'View Employees By Department', 'View Employees By Manager', 'Update Employee Managers'],
         name: 'userChoice',
     },
     {
@@ -60,7 +60,7 @@ const questions = [
     },
     {
         type: 'list',
-        message: "Who's information would you like to update?",
+        message: "Who's role would you like to update?",
         name: 'employeeSelection',
         choices: async function employees() {return retrieveEmployees()},
         when: (answers => answers.userChoice == 'Update An Employee Role'),
@@ -85,6 +85,20 @@ const questions = [
         name: 'employeeManager',
         choices: async function roles() {return retrieveManagers()},
         when: (answers => answers.userChoice == 'View Employees By Manager')
+    },
+    {
+        type: 'list',
+        message: "Which employee would you like to update?",
+        name: 'employeeSelection',
+        choices: async function roles() {return retrieveEmployees()},
+        when: (answers => answers.userChoice == 'Update Employee Managers')
+    },
+    {
+        type: 'list',
+        message: "Who is that employee's new manager?",
+        name: 'employeeManager',
+        choices: async function roles() {return retrieveManagers()},
+        when: (answers => answers.userChoice == 'Update Employee Managers')
     },
 ]
 
