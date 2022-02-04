@@ -1,4 +1,4 @@
-# EMPLOYEE TRACKER
+# EMPLOYEE MANAGEMENT SYSTEM
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg)](code_of_conduct.md)
 
@@ -15,9 +15,9 @@
 - [Questions](#Questions)
 
 ## Description
-**Employee Tracker** is a command-line application that allows for the user to display, update, and manage departments, roles, and employees within a company.  This content management system was builty primarily with [Node.js](https://nodejs.org/en/) , [Inquirer](https://www.npmjs.com/package/inquirer), and [MySQL](https://www.npmjs.com/package/mysql2) packages. **Employee Tracker** was created to provide small businesses owners and HR departments with a platform that allows for them to organize and manage employee, role, and department data within their database.
+**EMPLOYEE MANAGEMENT SYSTEM** is a command-line application that allows for the user to display, update, and manage departments, roles, and employees within a company.  This content management system was builty primarily with [Node.js](https://nodejs.org/en/) , [Inquirer](https://www.npmjs.com/package/inquirer), and [MySQL](https://www.npmjs.com/package/mysql2) packages. **EMPLOYEE MANAGEMENT SYSTEM** was created to provide small businesses owners and HR departments with a platform that allows for them to organize and manage employee, role, and department data within their database.
 
-**Employee Tracker** currently allows the user to perform the following actions...
+**EMPLOYEE MANAGEMENT SYSTEM** currently allows the user to perform the following actions...
 | Action      | 
 | ----------- | 
 | Display Departments |
@@ -41,14 +41,14 @@
 ![MySQL Logo](./assets/images/mySQL-logo.png)
 
 ## Links
-- ### [URL to Github Repository](https://github.com/inklein1997/Employee-Tracker)
+- ### [URL to Github Repository](https://github.com/inklein1997/Employee-Management-System)
 - ### [URL to Video Walkthrough of Application](https://drive.google.com/file/d/1d6eubMqjFM-JKbW2NnlKZN_NYjc8in9l/view)
 
 ## Screenshot of Webpage
 ![alt](./assets/images/application-screenshot.png)
 
 ## Installation Instructions
-Since **Employee Tracker** is primarily a NodeJS application, you must have NodeJS downloaded. Please download [here](https://nodejs.org/en/download/) if you have not done so previously.
+Since **EMPLOYEE MANAGEMENT SYSTEM** is primarily a NodeJS application, you must have NodeJS downloaded. Please download [here](https://nodejs.org/en/download/) if you have not done so previously.
 
 <br>
 
