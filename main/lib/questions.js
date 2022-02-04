@@ -4,7 +4,7 @@ const questions = [
     {
         type: 'list',
         message: 'What would you like to do?',
-        choices: ['View All Departments', 'View All Roles', 'View All Employees', 'Add A Department', 'Add A Role', 'Add An Employee', 'Update An Employee Role', 'View Employees By Department', 'View Employees By Manager', 'Update Employee Managers'],
+        choices: ['View All Departments', 'View All Roles', 'View All Employees', 'Add A Department', 'Add A Role', 'Add An Employee', 'Update An Employee Role', 'View Employees By Department', 'View Employees By Manager', 'Update Employee Managers', 'Delete A Department', 'Delete A Role', 'Delete An Employee'],
         name: 'userChoice',
     },
     {
@@ -83,23 +83,49 @@ const questions = [
         type: 'list',
         message: "View employees by which manager?",
         name: 'employeeManager',
-        choices: async function roles() {return retrieveManagers()},
+        choices: async function managers() {return retrieveManagers()},
         when: (answers => answers.userChoice == 'View Employees By Manager')
     },
     {
         type: 'list',
         message: "Which employee would you like to update?",
         name: 'employeeSelection',
-        choices: async function roles() {return retrieveEmployees()},
+        choices: async function employees() {return retrieveEmployees()},
         when: (answers => answers.userChoice == 'Update Employee Managers')
     },
     {
         type: 'list',
         message: "Who is that employee's new manager?",
         name: 'employeeManager',
-        choices: async function roles() {return retrieveManagers()},
+        choices: async function managers() {return retrieveManagers()},
         when: (answers => answers.userChoice == 'Update Employee Managers')
+    },
+    {
+        type: 'list',
+        message: "Which department would you like to delete?",
+        name: 'roleDepartment',
+        choices: async function employees() {return retrieveDepartments()},
+        when: (answers => answers.userChoice == 'Delete A Department'),
+    },
+    {
+        type: 'list',
+        message: "Which role would you like to delete?",
+        name: 'employeeRole',
+        choices: async function employees() {return retrieveRoles()},
+        when: (answers => answers.userChoice == 'Delete A Role'),
+    },
+    {
+        type: 'list',
+        message: "Which employee would you like to delete?",
+        name: 'employeeSelection',
+        choices: async function employees() {return retrieveEmployees()},
+        when: (answers => answers.userChoice == 'Delete An Employee'),
     },
 ]
 
+
+
+
+
+'Delete A Department,', 'Delete A Role', 'Delete An Employee'
 module.exports = questions

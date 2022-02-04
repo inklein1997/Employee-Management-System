@@ -145,6 +145,30 @@ const updateEmployeeManager = (employeeId, managerId) => {
     })
 }
 
+const deleteDepartment = (departmentId) => {
+    const sqlQuery = `DELETE FROM departments WHERE department_id = ?;`
+    db.query(sqlQuery, [departmentId], (err, res) => {
+        err ? console.log(err) : console.log(`Department has been deleted`)
+        askQuestions()
+    })
+}
+
+const deleteRole = (roleId) => {
+    const sqlQuery = `DELETE FROM roles WHERE role_id = ?;`
+    db.query(sqlQuery, [roleId], (err, res) => {
+        err ? console.log(err) : console.log(`Role has been deleted`)
+        askQuestions()
+    })
+}
+
+const deleteEmployee = (employeeId) => {
+    const sqlQuery = `DELETE FROM employees WHERE employee_id = ?;`
+    db.query(sqlQuery, [employeeId], (err, res) => {
+        err ? console.log(err) : console.log(`Employee has been deleted`)
+        askQuestions()
+    })
+}
+
 const askQuestions = () => {
     inquirer.prompt(questions)
         .then((answers) => {
@@ -181,6 +205,16 @@ const askQuestions = () => {
                     break;
                 case 'Update Employee Managers':
                     updateEmployeeManager(employeeSelection, employeeManager)
+                    break;
+                case 'Delete A Department':
+                    deleteDepartment(roleDepartment);
+                    break;
+                case 'Delete A Role':
+                    deleteRole(employeeRole);
+                    break;
+                case 'Delete An Employee':
+                    deleteEmployee(employeeSelection);
+                    break
             }
         })
     return
