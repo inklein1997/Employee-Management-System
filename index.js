@@ -110,8 +110,8 @@ const viewEmployeesByDepartment = (departmentId) => {
         JOIN company_db.departments ON roles.department_id = departments.department_id
         WHERE departments.department_id = ?;`
     db.query(sqlQuery, [departmentId], (err, response) => {
-        if(err) {
-            console.log(err) 
+        if (err) {
+            console.log(err)
             return
         } else {
             console.table(response)
@@ -127,7 +127,7 @@ const viewEmployeesByManager = (managerId) => {
         ON man.employee_id = emp.manager_id
         WHERE emp.manager_id = ?;`;
     db.query(sqlQuery, [managerId], (err, response) => {
-        if(err) {
+        if (err) {
             console.log(err);
             return;
         } else {
@@ -169,12 +169,23 @@ const deleteEmployee = (employeeId) => {
     })
 }
 
+const displayBudget = () => {
+    const sqlQuery = `SELECT department_name, SUM(salary) AS Budget
+    FROM employees
+    JOIN roles ON employees.role_id = roles.role_id
+    LEFT JOIN departments ON roles.department_id= departments.department_id
+    GROUP BY departments.department_name;`;
+    db.query(sqlQuery, (err, response) => {
+        err ? console.log(err) : console.table(response)
+        askQuestions()
+    })
+}
+
 const askQuestions = () => {
     inquirer.prompt(questions)
         .then((answers) => {
             const { userChoice, departmentName, roleName, salary, roleDepartment, firstName, lastName, employeeRole, employeeManager, employeeSelection, employeeSelectionRole } = answers
-            console.log(answers)
-            console.log(`\nUser selected to ${userChoice}\n`)
+            console.log(`\nYou selected ${userChoice}\n`)
             switch (userChoice) {
                 case 'View All Departments':
                     displayDepartments();
@@ -214,10 +225,15 @@ const askQuestions = () => {
                     break;
                 case 'Delete An Employee':
                     deleteEmployee(employeeSelection);
-                    break
+                    break;
+                case 'Display Budget For Each Department':
+                    displayBudget();
+                    break;
+                case 'Quit':
+                    console.log('Goodbye!')
+                    break;
             }
         })
-    return
 }
 
 askQuestions()
