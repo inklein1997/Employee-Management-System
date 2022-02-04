@@ -42,7 +42,7 @@
 
 ## Links
 - ### [URL to Github Repository](https://github.com/inklein1997/Employee-Tracker)
-- ### [URL to Video Walkthrough of Application]()
+- ### [URL to Video Walkthrough of Application](https://drive.google.com/file/d/1d6eubMqjFM-JKbW2NnlKZN_NYjc8in9l/view)
 
 ## Screenshot of Webpage
 ![alt](./assets/images/application-screenshot.png)
@@ -104,7 +104,7 @@ node index.js
 
 
 
-If you would like to watch a video runthrough of the application, click [Here]().
+If you would like to watch a video runthrough of the application, click [Here](https://drive.google.com/file/d/1d6eubMqjFM-JKbW2NnlKZN_NYjc8in9l/view).
 
 
 ## License
