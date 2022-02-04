@@ -90,13 +90,14 @@ const addEmployee = (firstName, lastName, roleName, employeeManager) => {
 };
 
 const updateEmployee = (roleId, employeeId) => {
+    console.log('test')
     const sqlQuery = `UPDATE employees SET role_id = ? WHERE employee_id = ?`
     db.query(sqlQuery, [roleId, employeeId], (err, response) => {
         if (err) {
             console.log(err);
             return
         } else {
-            console.log(`Added employee ${firstName} ${lastName} to the database`)
+            console.log("The Employee's role has been changed")
             askQuestions()
         }
     })
@@ -126,7 +127,7 @@ const askQuestions = () => {
                 case 'Add An Employee':
                     addEmployee(firstName, lastName, employeeRole, employeeManager);
                     break;
-                case 'Update An Employee':
+                case 'Update An Employee Role':
                     updateEmployee(employeeSelectionRole, employeeSelection);
                     break;
             }
