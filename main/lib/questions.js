@@ -4,7 +4,7 @@ const questions = [
     {
         type: 'list',
         message: 'What would you like to do?',
-        choices: ['View All Departments', 'View All Roles', 'View All Employees', 'Add A Department', 'Add A Role', 'Add An Employee', 'Update An Employee Role'],
+        choices: ['View All Departments', 'View All Roles', 'View All Employees', 'Add A Department', 'Add A Role', 'Add An Employee', 'Update An Employee Role', 'View Employees By Department'],
         name: 'userChoice',
     },
     {
@@ -71,6 +71,13 @@ const questions = [
         name: 'employeeSelectionRole',
         choices: async function roles() {return retrieveRoles()},
         when: (answers => answers.userChoice == 'Update An Employee Role'),
+    },
+    {
+        type: 'list',
+        message: 'View employees by which department? ',
+        choices: async function depts() {return retrieveDepartments()},
+        name: 'roleDepartment',
+        when: (answers => answers.userChoice == 'View Employees By Department'),
     },
 ]
 

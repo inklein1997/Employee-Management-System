@@ -90,7 +90,6 @@ const addEmployee = (firstName, lastName, roleName, employeeManager) => {
 };
 
 const updateEmployee = (roleId, employeeId) => {
-    console.log('test')
     const sqlQuery = `UPDATE employees SET role_id = ? WHERE employee_id = ?`
     db.query(sqlQuery, [roleId, employeeId], (err, response) => {
         if (err) {
@@ -103,11 +102,30 @@ const updateEmployee = (roleId, employeeId) => {
     })
 };
 
+const viewEmployeeByDepartment = (departmentId) => {
+    console.log(departmentId)
+    const sqlQuery = `SELECT employee_id, first_name, last_name, departments.department_name
+    FROM company_db.employees
+    JOIN company_db.roles ON employees.role_id = roles.role_id
+    JOIN company_db.departments ON roles.department_id = departments.department_id
+    WHERE departments.department_id = ?;`
+    db.query(sqlQuery, [departmentId], (err, response) => {
+        if(err) {
+            console.log(err) 
+            return
+        } else {
+            console.table(response)
+            askQuestions()
+        }
+    })
+}
+
 const askQuestions = () => {
     inquirer.prompt(questions)
         .then((answers) => {
             const { userChoice, departmentName, roleName, salary, roleDepartment, firstName, lastName, employeeRole, employeeManager, employeeSelection, employeeSelectionRole } = answers
             console.log(`\nUser selected to ${userChoice}\n`)
+            console.log(answers)
             switch (userChoice) {
                 case 'View All Departments':
                     displayDepartments();
@@ -129,6 +147,9 @@ const askQuestions = () => {
                     break;
                 case 'Update An Employee Role':
                     updateEmployee(employeeSelectionRole, employeeSelection);
+                    break;
+                case 'View Employees By Department':
+                    viewEmployeeByDepartment(roleDepartment);
                     break;
             }
         })
