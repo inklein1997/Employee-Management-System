@@ -18,8 +18,8 @@ const displayDepartments = () => {
 
 const displayRoles = () => {
     const sqlQuery = `SELECT role_id AS id, role_title, department_name, salary 
-    FROM departments 
-    JOIN roles ON roles.department_id = departments.department_id;`
+        FROM departments 
+        JOIN roles ON roles.department_id = departments.department_id;`
     db.query(sqlQuery, (err, response) => {
         if (err) {
             console.log(err);
@@ -33,12 +33,13 @@ const displayRoles = () => {
 
 // NEED TO FIX MANAGERS COLUMN!
 const displayEmployees = () => {
-    const sqlQuery = `SELECT emp.employee_id AS id, emp.first_name, emp.last_name, role_title, department_name, emp.manager_id, man.first_name AS manager_first_name, man.last_name AS manager_last_name
-    FROM employees emp
-    JOIN roles ON emp.role_id = roles.role_id
-    LEFT JOIN departments ON roles.department_id= departments.department_id
-    LEFT JOIN employees man
-    ON man.employee_id = emp.manager_id;`
+    const sqlQuery = `SELECT emp.employee_id AS id, emp.first_name, emp.last_name, role_title, department_name, emp.manager_id, man.first_name AS manager_first_name, man.
+        last_name AS manager_last_name
+        FROM employees emp
+        JOIN roles ON emp.role_id = roles.role_id
+        LEFT JOIN departments ON roles.department_id= departments.department_id
+        LEFT JOIN employees man
+        ON man.employee_id = emp.manager_id;`
     db.query(sqlQuery, (err, response) => {
         if (err) {
             console.log(err);
@@ -102,13 +103,12 @@ const updateEmployee = (roleId, employeeId) => {
     })
 };
 
-const viewEmployeeByDepartment = (departmentId) => {
-    console.log(departmentId)
+const viewEmployeesByDepartment = (departmentId) => {
     const sqlQuery = `SELECT employee_id, first_name, last_name, departments.department_name
-    FROM company_db.employees
-    JOIN company_db.roles ON employees.role_id = roles.role_id
-    JOIN company_db.departments ON roles.department_id = departments.department_id
-    WHERE departments.department_id = ?;`
+        FROM company_db.employees
+        JOIN company_db.roles ON employees.role_id = roles.role_id
+        JOIN company_db.departments ON roles.department_id = departments.department_id
+        WHERE departments.department_id = ?;`
     db.query(sqlQuery, [departmentId], (err, response) => {
         if(err) {
             console.log(err) 
@@ -120,12 +120,29 @@ const viewEmployeeByDepartment = (departmentId) => {
     })
 }
 
+const viewEmployeesByManager = (managerId) => {
+    const sqlQuery = `SELECT emp.employee_id AS id, emp.first_name, emp.last_name, emp.manager_id, man.first_name AS manager_first_name, man.last_name AS manager_last_name
+        FROM employees emp
+        LEFT JOIN employees man
+        ON man.employee_id = emp.manager_id
+        WHERE emp.manager_id = ?;`;
+    db.query(sqlQuery, [managerId], (err, response) => {
+        if(err) {
+            console.log(err);
+            return;
+        } else {
+            console.table(response);
+            askQuestions();
+        }
+    })
+}
+
 const askQuestions = () => {
     inquirer.prompt(questions)
         .then((answers) => {
             const { userChoice, departmentName, roleName, salary, roleDepartment, firstName, lastName, employeeRole, employeeManager, employeeSelection, employeeSelectionRole } = answers
-            console.log(`\nUser selected to ${userChoice}\n`)
             console.log(answers)
+            console.log(`\nUser selected to ${userChoice}\n`)
             switch (userChoice) {
                 case 'View All Departments':
                     displayDepartments();
@@ -149,7 +166,10 @@ const askQuestions = () => {
                     updateEmployee(employeeSelectionRole, employeeSelection);
                     break;
                 case 'View Employees By Department':
-                    viewEmployeeByDepartment(roleDepartment);
+                    viewEmployeesByDepartment(roleDepartment);
+                    break;
+                case 'View Employees By Manager':
+                    viewEmployeesByManager(employeeManager);
                     break;
             }
         })
