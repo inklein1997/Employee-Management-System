@@ -29,5 +29,14 @@ const retrieveEmployees = async () => {
     return employeesArr
 }
 
+const retrieveManagers = async () => {
+    let managers = await db.promise().query(`SELECT * FROM company_db.employees WHERE manager_id IS NULL;`);
+    let managersArr = managers[0].map(({ employee_id, first_name, last_name }) => ({
+        name: `${first_name} ${last_name}`,
+        value: employee_id
+    }));
+    return managersArr
+}
 
-module.exports = { retrieveDepartments, retrieveRoles, retrieveEmployees };
+
+module.exports = { retrieveDepartments, retrieveRoles, retrieveEmployees, retrieveManagers };

@@ -1,4 +1,4 @@
-const { retrieveDepartments, retrieveRoles, retrieveEmployees } = require('../utils/retrieveOptions.js')
+const { retrieveDepartments, retrieveRoles, retrieveEmployees, retrieveManagers} = require('../utils/retrieveOptions.js')
 
 const questions = [
     {
@@ -55,7 +55,7 @@ const questions = [
         type: 'list',
         message: "Who is the employee's manager?",
         name: 'employeeManager',
-        choices: ['1', '2', '3'],
+        choices: async function roles() {return retrieveManagers()},
         when: (answers => answers.userChoice == 'Add An Employee'),
     },
     {
