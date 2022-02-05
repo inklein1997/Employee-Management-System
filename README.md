@@ -117,6 +117,7 @@ Here's how you can contribute...
 2. Submit pull request for review.
 
 ## Acknowledgements
+Special thanks given to [Aaron Centeno](https://github.com/aaroncenteno) for his assistance in this assignment.  He was able to provide a solution that was pivotal in the functionality of this application.
 
 ## Questions
 If you have any questions, please contact me via:
