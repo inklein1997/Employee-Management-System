@@ -17,10 +17,13 @@ JOIN roles ON roles.department_id = departments.department_id;
 -- JOIN table2 ON table1.primarykey = table2.foreignkey
 -- JOIN table3 ON table2.primarykey = table3.foreignkey
 
-SELECT * 
-FROM departments
-JOIN roles ON departments.department_id = roles.department_id
-JOIN employees ON roles.role_id = employees.role_id;
+SELECT emp.employee_id AS id, emp.first_name, emp.last_name, role_title, department_name, emp.manager_id, man.first_name AS manager_first_name, man.
+last_name AS manager_last_name
+FROM employees emp
+LEFT JOIN roles ON emp.role_id = roles.role_id
+LEFT JOIN departments ON roles.department_id= departments.department_id
+LEFT JOIN employees man
+ON man.employee_id = emp.manager_id;
 
 -- Add A Department
 INSERT INTO departments (department_name)
@@ -33,12 +36,44 @@ INSERT INTO roles (role_title, salary, department_name)
         (?,?);
 
 -- Add A Employee
-INSERT INTO roles (first_name, last_name, role_title, manager_id)
+INSERT INTO employees (first_name, last_name, role_title, manager_id)
     VALUES 
         (?,?,?,?);
 
 -- Update An Employee Role
-
 UPDATE employees
 SET role_id = ?
 WHERE employee_id = ?
+
+-- View Employees By Department
+SELECT employee_id, first_name, last_name, departments.department_name
+FROM company_db.employees
+JOIN company_db.roles ON employees.role_id = roles.role_id
+JOIN company_db.departments ON roles.department_id = departments.department_id
+WHERE departments.department_id = ?;
+
+-- View Employees By Manager
+SELECT emp.employee_id AS id, emp.first_name, emp.last_name, emp.manager_id, man.first_name AS manager_first_name, man.last_name AS manager_last_name
+FROM employees emp
+LEFT JOIN employees man
+ON man.employee_id = emp.manager_id
+WHERE emp.manager_id = ?;
+
+-- Update Employee Manager
+UPDATE employees SET manager_id = ? WHERE employee_id = ?
+
+-- Delete Role
+DELETE FROM roles WHERE role_id = ?;
+
+-- Delete Department
+DELETE FROM departments WHERE department_id = ?;
+
+-- Delete Employee
+DELETE FROM employees WHERE employee_id = ?;
+
+-- Display Budget
+SELECT department_name, SUM(salary) AS Budget
+FROM employees
+JOIN roles ON employees.role_id = roles.role_id
+LEFT JOIN departments ON roles.department_id= departments.department_id
+GROUP BY departments.department_name;
